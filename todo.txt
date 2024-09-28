@@ -1,0 +1,10 @@
++ controller
+    - register (done)
+    - login (done)
+    - verify-login (done)
+    - logout (done)
+
++ task service
+    - get task by id
+    - delete task
+    - get all task (not detail) [id, task]
