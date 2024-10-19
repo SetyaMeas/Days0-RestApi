@@ -4,17 +4,36 @@ using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using RestApi;
 using RestApi.Src.Config;
 using RestApi.Src.Middlewares;
 using RestApi.Src.Validations;
 
 var builder = WebApplication.CreateBuilder(args);
+
 var secret = new Secret(builder.Configuration);
+var clientOne = new CorsOrigin { Name = "clientOne", Origin = "http://localhost:5173" };
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// cross-origin-request (cors service)
+builder.Services.AddCors(opts =>
+{
+    opts.AddPolicy(
+        name: clientOne.Name,
+        builder =>
+        {
+            builder
+                .WithOrigins(clientOne.Origin)
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials();
+        }
+    );
+});
 
 builder.Services.AddControllers();
 
@@ -71,6 +90,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(clientOne.Name);
 
 app.UseAuthentication();
 app.UseAuthorization();

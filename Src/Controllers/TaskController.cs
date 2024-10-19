@@ -46,6 +46,15 @@ namespace RestApi.Src.Controllers
         }
 
         [Authorize]
+        [HttpGet("all")]
+        public async Task<IActionResult> GetAllTask()
+        {
+            var user = GetUserClaim(HttpContext);
+            var tasks = await taskService.GetAllAsync(user.UserId);
+            return Ok(tasks);
+        }
+
+        [Authorize]
         [HttpGet("detail/{taskId}")]
         public async Task<IActionResult> GetTaskDetail(int taskId)
         {

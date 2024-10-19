@@ -14,9 +14,9 @@ namespace RestApi.Src.Validations.CustomValidators
             return rule.NotEmpty()
                 .WithMessage(msg.NotEmptyMsg(property))
                 .MinimumLength(6)
-                .WithMessage(msg.MinLen(property, 6))
+                .WithMessage(msg.MinLenMsg(property, 6))
                 .MaximumLength(20)
-                .WithMessage(msg.MaxLen(property, 20));
+                .WithMessage(msg.MaxLenMsg(property, 20));
         }
 
         public static IRuleBuilderOptions<T, string> PasswordValidator<T>(
@@ -27,9 +27,9 @@ namespace RestApi.Src.Validations.CustomValidators
             return rule.NotEmpty()
                 .WithMessage(msg.NotEmptyMsg(property))
                 .MinimumLength(8)
-                .WithMessage(msg.MinLen(property, 8))
+                .WithMessage(msg.MinLenMsg(property, 8))
                 .MaximumLength(20)
-                .WithMessage(msg.MinLen(property, 20));
+                .WithMessage(msg.MinLenMsg(property, 20));
         }
 
         public static IRuleBuilderOptions<T, string> EmailValidator<T>(

@@ -1,6 +1,6 @@
 using FluentValidation;
-using RestApi.Src.CustomExceptions;
 using MediatR;
+using RestApi.Src.CustomExceptions;
 
 namespace RestApi.Src.Validations
 {

@@ -18,7 +18,7 @@ namespace RestApi.Src.Services
             dbString = secret.GetDbString();
         }
 
-        public async Task<int> CreateUser(RegisterCmd req)
+        public async Task<int> CreateUserAsync(RegisterCmd req)
         {
             string sql = "exec sp_insert_user @Username, @Email, @Passwd;";
             using var connection = new SqlConnection(dbString);

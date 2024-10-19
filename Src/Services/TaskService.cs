@@ -71,5 +71,13 @@ namespace RestApi.Src.Services
             );
             return task.RecordsAffected == 1;
         }
+
+        public async Task<List<AllTaskDto>> GetAllAsync(int userId)
+        {
+            string sql = "exec sp_get_all_byUserId @userId;";
+            using var con = new SqlConnection(DbString);
+            var tasks = (await con.QueryAsync<AllTaskDto>(sql, new { userId })).ToList();
+            return tasks;
+        }
     }
 }

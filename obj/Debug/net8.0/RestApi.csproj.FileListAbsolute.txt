@@ -77,3 +77,4 @@
 /home/setya/personal/code/Days0/dotnet/RestApi/bin/Debug/net8.0/Isopoh.Cryptography.Blake2b.dll
 /home/setya/personal/code/Days0/dotnet/RestApi/bin/Debug/net8.0/Isopoh.Cryptography.SecureArray.dll
 /home/setya/personal/code/Days0/dotnet/RestApi/bin/Debug/net8.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/home/setya/personal/code/Days0/dotnet/RestApi/obj/Debug/net8.0/RestApi.sourcelink.json

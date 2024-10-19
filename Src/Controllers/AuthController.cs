@@ -57,19 +57,17 @@ namespace RestApi.Src.Controllers
         public async Task<IActionResult> Register([FromBody] RegisterCmd req)
         {
             await _mediator.Send(req);
-            int userId = -1;
             req.Passwd = passwordHashing.Hash(req.Passwd);
 
             try
             {
-                userId = await userService.CreateUser(req);
-
+                int userId = await userService.CreateUserAsync(req);
                 string token = jwtService.GenerateAccessToken(
                     new Dto.JwtClaimDto { UserId = userId, Email = req.Email },
                     GetExpirationDate()
                 );
-                AppendCookie("access_token", token, GetExpirationDate().AddMinutes(-1));
 
+                AppendCookie("access_token", token, GetExpirationDate().AddMinutes(-1));
                 return Ok(new { userId, email = req.Email });
             }
             catch (SqlException e)
@@ -90,7 +88,8 @@ namespace RestApi.Src.Controllers
             try
             {
                 LoginDto result = await userService.GetUserForLogin(req);
-                if (passwordHashing.Verify(req.Passwd, result.Passwd))
+                bool isMatchedPwd = passwordHashing.Verify(req.Passwd, result.Passwd);
+                if (isMatchedPwd)
                 {
                     string token = jwtService.GenerateAccessToken(
                         new Dto.JwtClaimDto { UserId = result.UserId, Email = result.Email },
