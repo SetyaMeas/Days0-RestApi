@@ -42,5 +42,14 @@ namespace RestApi.Src.Services
             }
             return result;
         }
+
+        public async Task<bool> IsExistedEmailAsync(string Email)
+        {
+            string sql = "exec sp_get_user_for_login @Email;";
+            using var connection = new SqlConnection(dbString);
+            var result = await connection.QuerySingleOrDefaultAsync<LoginDto>(sql, new { Email });
+
+            return result != null;
+        }
     }
 }

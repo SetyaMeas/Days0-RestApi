@@ -119,5 +119,16 @@ namespace RestApi.Src.Controllers
         {
             return Ok();
         }
+
+        [HttpGet("verify-email/{Email}")]
+        public async Task<IActionResult> VerifyEmail(string Email)
+        {
+            var existedEmail = await userService.IsExistedEmailAsync(Email);
+            if (existedEmail)
+            {
+                return Conflict(new { property = "email", message = "email already existed" });
+            }
+            return Ok();
+        }
     }
 }

@@ -41,6 +41,12 @@ namespace RestApi.Src.Controllers
             await _mediator.Send(req);
 
             JwtClaimDto user = GetUserClaim(HttpContext);
+            var totalTask = await taskService.CountTaskByUserIdAsync(user.UserId);
+            if (totalTask >= 15)
+            {
+                return StatusCode(StatusCodes.Status429TooManyRequests, "Task limit is 15");
+            }
+
             var task = await taskService.CreateTaskAsync(req, user.UserId);
             return Ok(task);
         }

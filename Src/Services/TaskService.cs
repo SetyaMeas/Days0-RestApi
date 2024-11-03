@@ -79,5 +79,13 @@ namespace RestApi.Src.Services
             var tasks = (await con.QueryAsync<AllTaskDto>(sql, new { userId })).ToList();
             return tasks;
         }
+
+        public async Task<int> CountTaskByUserIdAsync(int userId)
+        {
+            string sql = "exec sp_Count_Task_By_UserId @UserId;";
+            using var con = new SqlConnection(DbString);
+            int totalTasks = await con.ExecuteScalarAsync<int>(sql, new { UserId = userId });
+            return totalTasks;
+        }
     }
 }

@@ -13,3 +13,4 @@ namespace RestApi.Src.Dto
         public int TotalSeconds { get; set; } = 0;
     }
 }
+
